@@ -1,0 +1,69 @@
+PANEL TO PROTOTYPE · v1.0.0
+A shareable agent skill for simulated product panels and workflow prototyping.
+
+WHAT IS INCLUDED
+- panel-to-prototype/SKILL.md: the reusable workflow and scope boundaries.
+- references/: panel design, prototype behavior and repeat-round guidance.
+- assets/: project brief, JSON record format and a fully fictional example.
+- scripts/render_panel.py: optional standalone/offline review-canvas generator.
+- scripts/test_render_panel.py: eight focused helper tests.
+- agents/openai.yaml: Codex display name and suggested starting prompt.
+- example-panel.html: an example research canvas that opens directly in a browser.
+
+INSTALL / SHARE
+Extract the ZIP. The skill folder is panel-to-prototype, the directory containing
+SKILL.md. Share that folder or the complete ZIP with another person.
+
+For Codex, copy the panel-to-prototype folder into your skills directory, normally
+~/.codex/skills/ (or the skills directory under a configured CODEX_HOME). Start a
+new session if the skill is not yet discovered. This archive does not install
+itself, change settings or publish a website.
+
+Other assistants that can read local files can be asked to follow SKILL.md;
+their native installation/discovery conventions may differ. No particular model,
+connector, browser or multi-agent system is required to follow the instructions.
+
+EXAMPLE REQUESTS AFTER INSTALLATION
+
+Use $panel-to-prototype to review this product with relevant simulated customer
+perspectives. Give me the main needs and two candidate workflow experiments.
+Panel only for now; do not implement or contact anyone.
+
+Use $panel-to-prototype on this app and repository. Run a simulated panel, select
+two distinct workflow experiments, and build them locally using the existing
+design system. Keep AI simulated, with sources and explicit human review.
+
+Use $panel-to-prototype to inspect our prior rounds. Expand the panel only where
+new perspectives expose a different need or objection, then build or extend two
+more flows. Keep disagreements and verification limits visible.
+
+OPTIONAL CANVAS GENERATOR
+Requires Python 3.9 or newer; no third-party packages, API keys or network calls.
+From the extracted folder:
+
+python3 panel-to-prototype/scripts/render_panel.py \
+  panel-to-prototype/assets/round-record.example.json --out my-panel.html
+
+Copy/adapt the example JSON for a real project. The schema documents its fields.
+Use --check to validate only. Existing output files are protected; use --overwrite
+only when intentionally replacing one. Open the generated HTML in a browser.
+
+Run helper tests:
+python3 panel-to-prototype/scripts/test_render_panel.py
+
+HOW TO USE IT WELL
+Supply the product/repository, what decision matters, available evidence and what
+is authorized to build. The project brief template helps capture that context.
+Actual product implementation uses the host's existing tools and permissions;
+the skill is not a generic frontend starter or an automatic deployer.
+
+Simulated roles produce hypotheses, not interviews, purchase intent, ROI or
+product-market fit. The skill preserves observed/reported/context/hypothesis/
+prototype-result distinctions, objections and simpler alternatives. A larger
+panel or longer feature list is not validation.
+
+The package contains only original generic instructions and fictional examples.
+It includes no client screenshots, branded assets, credentials, proprietary source
+code or private business conversations. Its generator checks format and links,
+not whether research claims are true. Keep confidential project inputs outside
+shared distributions unless their disclosure is authorized.

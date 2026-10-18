@@ -1,0 +1,4 @@
+interface:
+  display_name: "Panel to Prototype"
+  short_description: "Turn simulated panels into testable product workflows"
+  default_prompt: "Use $panel-to-prototype to review this product with relevant simulated perspectives, prioritize distinct customer needs, and build the selected workflows in its existing design system."

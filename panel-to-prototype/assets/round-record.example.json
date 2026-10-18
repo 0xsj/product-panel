@@ -1,0 +1,228 @@
+{
+  "version": 1,
+  "project": {
+    "name": "Fictional Field Desk",
+    "question": "Which follow-through experiment should we prototype next?",
+    "round": 1,
+    "date": "2026-01-15",
+    "mode": "panel-only"
+  },
+  "method": {
+    "kind": "simulated",
+    "summary": "One simulated analysis using four role lenses and the fictional supplied brief. No people were contacted and no product was inspected.",
+    "limitations": [
+      "All example businesses, workflows and claims are fictional.",
+      "Four represented perspectives are not four independent reviews or interviews.",
+      "No measured demand, usability improvement or buying intent is available."
+    ]
+  },
+  "evidence": [
+    {
+      "id": "e-brief",
+      "kind": "reported",
+      "claim": "The fictional brief describes a job list, an assignment step and a Complete button; it does not establish that physical work is verified.",
+      "source": "Fictional example brief supplied for this template",
+      "url": null
+    }
+  ],
+  "reviewers": [
+    {
+      "id": "r-coordinator",
+      "role": "Dispatch coordinator",
+      "relationships": [
+        "operator"
+      ],
+      "basis": "hypothesis",
+      "job": "Identify jobs awaiting information or follow-up.",
+      "incentive": "Potentially fewer repeated status checks.",
+      "objection": "Another board could duplicate the current job list.",
+      "disconfirming_question": "On the last job, what could the existing list not tell you?",
+      "evidence_ids": [
+        "e-brief"
+      ],
+      "new": true
+    },
+    {
+      "id": "r-owner",
+      "role": "Small service-firm owner",
+      "relationships": [
+        "buyer",
+        "operator"
+      ],
+      "basis": "hypothesis",
+      "job": "Assess workload and whether new software reduces administration.",
+      "incentive": "Potentially less checking and predictable cost.",
+      "objection": "No savings are established; staff may need to maintain two systems.",
+      "disconfirming_question": "Would preparation and checking take less time than your existing method?",
+      "evidence_ids": [
+        "e-brief"
+      ],
+      "new": true
+    },
+    {
+      "id": "r-technician",
+      "role": "Contract technician",
+      "relationships": [
+        "recipient",
+        "boundary"
+      ],
+      "basis": "hypothesis",
+      "job": "Receive the relevant instructions for one job.",
+      "incentive": "A short, usable handoff.",
+      "objection": "May prefer a message or export rather than another account.",
+      "disconfirming_question": "Would this replace a repeated call, or merely add a login?",
+      "evidence_ids": [
+        "e-brief"
+      ],
+      "new": true
+    },
+    {
+      "id": "r-customer",
+      "role": "Service customer",
+      "relationships": [
+        "affected"
+      ],
+      "basis": "hypothesis",
+      "job": "Understand the next question and reported progress.",
+      "incentive": "Clearer requests with less repetition.",
+      "objection": "A polished update could imply completion that no one confirmed.",
+      "disconfirming_question": "Which status actually helped you decide what to do next?",
+      "evidence_ids": [
+        "e-brief"
+      ],
+      "new": true
+    }
+  ],
+  "needs": [
+    {
+      "id": "n-exceptions",
+      "need": "See what remains unresolved after assignment.",
+      "workflow": "Job follow-through",
+      "uncertainty": "The current list may already support this.",
+      "evidence_ids": [
+        "e-brief"
+      ],
+      "reviewer_ids": [
+        "r-coordinator",
+        "r-owner"
+      ]
+    },
+    {
+      "id": "n-handoff",
+      "need": "Give the next person relevant instructions and questions.",
+      "workflow": "Provider handoff",
+      "uncertainty": "A separate workspace may be unnecessary.",
+      "evidence_ids": [
+        "e-brief"
+      ],
+      "reviewer_ids": [
+        "r-technician",
+        "r-customer"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "id": "c-exceptions",
+      "name": "Unresolved-work review",
+      "decision": "prototype",
+      "need_ids": [
+        "n-exceptions"
+      ],
+      "rationale": "Tests whether separating assigned, reported and reviewed states reduces checking.",
+      "inputs": [
+        "Selected job records",
+        "Explicit reported status",
+        "Missing-information markers"
+      ],
+      "output": "Source-backed list of open questions.",
+      "human_decision": "Coordinator chooses the next action; generation never completes a job.",
+      "failure_cases": [
+        "No response",
+        "Conflicting reports",
+        "A record changes after generation"
+      ],
+      "dissent": "The existing job list may suffice; compare preparation and checking effort.",
+      "experiment_design": {
+        "phase": "Proposed future comparison only; no test has been run.",
+        "comparison": "Replay a recent anonymized job using current tools and the proposed checklist.",
+        "measures": [
+          "Preparation and checking time",
+          "Repeated entry",
+          "Incorrect completion conclusions"
+        ],
+        "decision_rule": "Continue only if the checklist reduces combined work without hiding unknowns."
+      }
+    },
+    {
+      "id": "c-handoff",
+      "name": "Scoped handoff preview",
+      "decision": "extend",
+      "need_ids": [
+        "n-handoff"
+      ],
+      "rationale": "Try a smaller addition to the existing message/export flow.",
+      "inputs": [
+        "Selected job",
+        "Named recipient",
+        "Permitted instructions"
+      ],
+      "output": "Editable, scoped handoff draft.",
+      "human_decision": "Operator reviews the audience and text; saving does not send.",
+      "failure_cases": [
+        "Wrong recipient",
+        "Private note included",
+        "Stale instructions"
+      ],
+      "dissent": "Recipient may not need a product account at all."
+    }
+  ],
+  "disagreements": [
+    {
+      "issue": "Does the receiving technician need a workspace?",
+      "positions": [
+        {
+          "reviewer_id": "r-coordinator",
+          "position": "A shared view might reduce repeated status checks."
+        },
+        {
+          "reviewer_id": "r-technician",
+          "position": "A short message or export may be sufficient."
+        }
+      ],
+      "resolution": "Prototype a scoped handoff within the existing flow before proposing another portal.",
+      "uncertainty": "No real receiving provider has evaluated the artifact."
+    }
+  ],
+  "next_validation": [
+    "Compare one anonymized recent job using current tools versus the prototype.",
+    "Record preparation time, checking effort, errors and repeated entry; ask the recipient whether the output helps."
+  ],
+  "implementation": {
+    "status": "not_built",
+    "entry_points": [],
+    "checks": [
+      {
+        "name": "Product interaction review",
+        "result": "not_run",
+        "detail": "This is a fictional format example, not a tested product."
+      }
+    ]
+  },
+  "unknowns": [
+    "Actual fields and enforcement have not been inspected.",
+    "The frequency and cost of follow-up remain unknown."
+  ],
+  "scenarios": [
+    {
+      "id": "s-open-job",
+      "fictional": true,
+      "records": [
+        "Job J-42 has a recorded staff assignment.",
+        "A required customer detail is still blank.",
+        "An attendance statement is absent."
+      ],
+      "review": "Assignment does not establish the missing detail or attendance. Check whether the existing list/export already exposes these questions."
+    }
+  ]
+}

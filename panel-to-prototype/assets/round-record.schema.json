@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Panel-to-prototype round record",
+  "type": "object",
+  "required": [
+    "version",
+    "project",
+    "method",
+    "evidence",
+    "reviewers",
+    "needs",
+    "candidates",
+    "disagreements",
+    "next_validation"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "project": {
+      "type": "object",
+      "required": [
+        "name",
+        "question",
+        "round",
+        "date"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "round": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "mode": {
+          "enum": [
+            "panel-only",
+            "prototype-from-research",
+            "full-round",
+            "iteration"
+          ]
+        }
+      }
+    },
+    "method": {
+      "type": "object",
+      "required": [
+        "kind",
+        "summary",
+        "limitations"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "simulated",
+            "mixed",
+            "provided-research"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "claim",
+          "source"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "observed",
+              "reported",
+              "context",
+              "hypothesis",
+              "prototype_result"
+            ]
+          },
+          "claim": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Optional http(s) source URL; never a fabricated citation."
+          },
+          "accessed": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "reviewers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "relationships",
+          "basis",
+          "job",
+          "incentive",
+          "objection",
+          "disconfirming_question",
+          "evidence_ids",
+          "new"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relationships": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "enum": [
+                "operator",
+                "buyer",
+                "recipient",
+                "referrer",
+                "affected",
+                "boundary"
+              ]
+            }
+          },
+          "basis": {
+            "enum": [
+              "hypothesis",
+              "context",
+              "provided-research"
+            ]
+          },
+          "job": {
+            "type": "string"
+          },
+          "incentive": {
+            "type": "string"
+          },
+          "objection": {
+            "type": "string"
+          },
+          "disconfirming_question": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "$ref": "#/$defs/ids"
+          },
+          "new": {
+            "type": "boolean"
+          },
+          "trigger": {
+            "type": "string"
+          },
+          "workaround": {
+            "type": "string"
+          },
+          "responsibility_boundary": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "needs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "need",
+          "workflow",
+          "uncertainty",
+          "evidence_ids",
+          "reviewer_ids"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "need": {
+            "type": "string"
+          },
+          "workflow": {
+            "type": "string"
+          },
+          "uncertainty": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "$ref": "#/$defs/ids"
+          },
+          "reviewer_ids": {
+            "$ref": "#/$defs/ids"
+          }
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "decision",
+          "need_ids",
+          "rationale",
+          "inputs",
+          "output",
+          "human_decision",
+          "failure_cases",
+          "dissent"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string"
+          },
+          "decision": {
+            "enum": [
+              "prototype",
+              "extend",
+              "defer",
+              "reject"
+            ]
+          },
+          "need_ids": {
+            "$ref": "#/$defs/ids"
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "output": {
+            "type": "string"
+          },
+          "human_decision": {
+            "type": "string"
+          },
+          "failure_cases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dissent": {
+            "type": "string"
+          },
+          "beneficiary": {
+            "type": "string"
+          },
+          "trigger": {
+            "type": "string"
+          },
+          "assumptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "experiment_design": {
+            "type": "object",
+            "description": "Optional proposed test design; not a completed experiment.",
+            "properties": {
+              "phase": {
+                "type": "string"
+              },
+              "sample": {
+                "type": "string"
+              },
+              "comparison": {
+                "type": "string"
+              },
+              "measures": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "decision_rule": {
+                "type": "string"
+              },
+              "disconfirming_question": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "disagreements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "issue",
+          "positions",
+          "resolution",
+          "uncertainty"
+        ],
+        "properties": {
+          "issue": {
+            "type": "string"
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "reviewer_id",
+                "position"
+              ],
+              "properties": {
+                "reviewer_id": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "resolution": {
+            "type": "string"
+          },
+          "uncertainty": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "next_validation": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "not_built",
+            "partial",
+            "built"
+          ]
+        },
+        "entry_points": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "result",
+              "detail"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "result": {
+                "enum": [
+                  "passed",
+                  "failed",
+                  "not_run"
+                ]
+              },
+              "detail": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "fictional",
+          "records",
+          "review"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "fictional": {
+            "type": "boolean"
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "review": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
